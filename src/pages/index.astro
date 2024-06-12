@@ -1,7 +1,3 @@
----
-
----
-
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -38,7 +34,14 @@
 
         <label>
           Teléfono
-          <input type="tel" name="phone" required minlength="8" />
+          <input
+            type="tel"
+            name="telephone"
+            required
+            minlength="9"
+            maxlength="9"
+            placeholder="0000-0000"
+          />
         </label>
 
         <label>
@@ -75,6 +78,13 @@
         <button type="submit">Enviar cotización</button>
       </form>
     </main>
+
+    <dialog id="message">
+      <p></p>
+      <form method="dialog">
+        <button>OK</button>
+      </form>
+    </dialog>
   </body>
 </html>
 
@@ -108,5 +118,45 @@
   input {
     width: 100%;
     box-sizing: border-box;
+    max-width: 300px;
   }
 </style>
+
+<script>
+  const form = document.querySelector('form') as HTMLFormElement
+  const message = document.querySelector('#message') as HTMLDialogElement
+  const submitButton = form.querySelector(
+    'button[type="submit"]',
+  ) as HTMLButtonElement
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    submitButton.disabled = true
+
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries())
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        ;(message.querySelector('p') as HTMLParagraphElement).textContent =
+          'Cotización enviada'
+        message.showModal()
+        form.reset()
+      })
+      .catch(() => {
+        ;(message.querySelector('p') as HTMLParagraphElement).textContent =
+          'Error al enviar la cotización'
+        message.showModal()
+      })
+      .finally(() => {
+        submitButton.disabled = false
+      })
+  })
+</script>
