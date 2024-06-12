@@ -3,14 +3,110 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css"
+    />
+    <title>EnjoyIt Promo</title>
+  </head>
+  <body>
+    <header>
+      <img src="/logo.webp" alt="EnjoyIt Logo" />
+    </header>
+
+    <main>
+      <form action="">
+        <label>
+          Nombre
+          <input type="text" name="first-name" required />
+        </label>
+
+        <label>
+          Apellido
+          <input type="text" name="last-name" required />
+        </label>
+
+        <label>
+          Correo Electrónico
+          <input type="email" name="email" required />
+        </label>
+
+        <label>
+          Teléfono
+          <input type="tel" name="phone" required minlength="8" />
+        </label>
+
+        <label>
+          Adultos
+          <input type="number" name="adults" required min="0" placeholder="1" />
+        </label>
+
+        <label>
+          Niños
+          <input
+            type="number"
+            name="children"
+            required
+            min="0"
+            placeholder="1"
+          />
+        </label>
+        <label>
+          Infantes
+          <input
+            type="number"
+            name="infants"
+            required
+            min="0"
+            placeholder="1"
+          />
+        </label>
+
+        <label>
+          Mes estimado de viaje
+          <input type="month" name="month" required />
+        </label>
+
+        <button type="submit">Enviar cotización</button>
+      </form>
+    </main>
+  </body>
 </html>
+
+<style is:global>
+  body {
+    background-color: #f1e162;
+  }
+
+  header {
+    background-color: #025360;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  header img {
+    height: 100px;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  label,
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
