@@ -38,9 +38,9 @@
             type="tel"
             name="telephone"
             required
-            minlength="9"
-            maxlength="9"
-            placeholder="0000-0000"
+            minlength="8"
+            maxlength="8"
+            placeholder="00000000"
           />
         </label>
 
@@ -125,9 +125,16 @@
 <script>
   const form = document.querySelector('form') as HTMLFormElement
   const message = document.querySelector('#message') as HTMLDialogElement
+  const monthPicker = form.querySelector(
+    'input[type="month"]',
+  ) as HTMLInputElement
   const submitButton = form.querySelector(
     'button[type="submit"]',
   ) as HTMLButtonElement
+
+  const todayMonth = new Date().toISOString().slice(0, 7)
+  monthPicker.value = todayMonth
+  monthPicker.min = todayMonth
 
   form.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -149,6 +156,9 @@
           'Cotización enviada'
         message.showModal()
         form.reset()
+        const todayMonth = new Date().toISOString().slice(0, 7)
+        monthPicker.value = todayMonth
+        monthPicker.min = todayMonth
       })
       .catch(() => {
         ;(message.querySelector('p') as HTMLParagraphElement).textContent =
