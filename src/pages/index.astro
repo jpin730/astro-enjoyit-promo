@@ -78,6 +78,13 @@
         <button type="submit">Enviar cotización</button>
       </form>
     </main>
+
+    <dialog id="message">
+      <p></p>
+      <form method="dialog">
+        <button>OK</button>
+      </form>
+    </dialog>
   </body>
 </html>
 
@@ -117,9 +124,16 @@
 
 <script>
   const form = document.querySelector('form') as HTMLFormElement
+  const message = document.querySelector('#message') as HTMLDialogElement
+  const submitButton = form.querySelector(
+    'button[type="submit"]',
+  ) as HTMLButtonElement
 
   form.addEventListener('submit', (event) => {
     event.preventDefault()
+
+    submitButton.disabled = true
+
     const formData = new FormData(form)
     const data = Object.fromEntries(formData.entries())
 
@@ -130,12 +144,19 @@
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data)
+      .then(() => {
+        ;(message.querySelector('p') as HTMLParagraphElement).textContent =
+          'Cotización enviada'
+        message.showModal()
+        form.reset()
       })
-      .catch((error) => {
-        console.error('Error:', error)
+      .catch(() => {
+        ;(message.querySelector('p') as HTMLParagraphElement).textContent =
+          'Error al enviar la cotización'
+        message.showModal()
+      })
+      .finally(() => {
+        submitButton.disabled = false
       })
   })
 </script>
